@@ -17,3 +17,6 @@ Link a repo: https://github.com/angsorre/ParkAssist
 Licenza scelta: GNU General Public License v3.0
 
 Data *indicativa* di presentazione: fine giugno 2025
+
+### Schema
+![schema](schema.png)
