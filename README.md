@@ -18,5 +18,9 @@ Licenza scelta: GNU General Public License v3.0
 
 Data *indicativa* di presentazione: fine giugno 2025
 
-### Schema
+## Schema
 ![schema](schema.png)
+
+### Alimentazione
+![wiring](wiring.png)
+Salvato nel file [wiring](wiring.txt), importabile in [circuitjs](https://www.falstad.com/circuit/circuitjs.html).
