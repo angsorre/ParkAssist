@@ -9,7 +9,6 @@ Componenti HW:
 - sensore ad ultra suoni (HC-SR04)
 - servo motore (SG90)
 - diodo laser a linea
-- relé 5V 
 - Arduino UNO R3
 
 Link a repo: https://github.com/angsorre/ParkAssist
