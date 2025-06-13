@@ -1,6 +1,7 @@
 // every distance measure is in cm;
-float mount_distance = 40.0; // distance to the wall at which the laser is mounted
 #include <math.h>
+float mount_distance = 40.0; // distance to the wall at which the laser is mounted
+#define LIMIT_ANGLE = 60; // angle at which the servo should be limited
 
 /// ------- TASKS -------- //
 #include <TaskScheduler.h>
@@ -29,6 +30,7 @@ Task tUpdateLaser(TASK_MILLISECOND * 200,
                   &ts,
                   true);
 
+
 void setup() {
   // put your setup code here, to run once:
   pointer.attach(9);
@@ -38,11 +40,15 @@ void loop() {
   ts.execute();
 }
 
+
+
 void readMeasure() {
   distance = hc.dist();
 }
 
 void moveLaser() {
   int deg = atan(distance/mount_distance) * 180/M_PI;
-  pointer.write(deg);
+  if(deg < LIMIT_ANGLE) {
+    pointer.write(deg);
+  }
 }

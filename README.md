@@ -20,6 +20,12 @@ Data *indicativa* di presentazione: fine giugno 2025
 ## Schema
 ![schema](schema.png)
 
+
 ### Alimentazione
 ![wiring](wiring.png)
 Salvato nel file [wiring](wiring.txt), importabile in [circuitjs](https://www.falstad.com/circuit/circuitjs.html).
+
+
+### Installazione
+Il laser va montato sul lato destro all'altezza del riferimento preso in considerazione. La distanza a cui si consiglia di montarlo è tra i 30-100cm, in maniera tale da ridurre la lunghezza della linea proiettata e da migliorare la precisione. Tale valore di distanza deve essere inserite nel parametro `mount_distance` prima di flashare il codice.
+
