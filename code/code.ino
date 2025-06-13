@@ -2,8 +2,8 @@
 #include <math.h>
 float MOUNT_DISTANCE = 40.0; // distance to the wall at which the laser is mounted
 #define LIMIT_ANGLE 60 // angle at which the servo should be limited
-#define BUTTON_PIN 8  // button that triggers the distance update interrupt
-#define POTENTIOMETER_PIN 14 // pin to whiche the distance potentiometer is connected
+#define BUTTON_PIN 8  // button that triggers the distance update
+#define POTENTIOMETER_PIN 14 // pin to which the distance potentiometer is connected
 
 /// ------- TASKS -------- //
 #include <TaskScheduler.h>
