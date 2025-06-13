@@ -1,7 +1,9 @@
 // every distance measure is in cm;
 #include <math.h>
-const float MOUNT_DISTANCE = 40.0; // distance to the wall at which the laser is mounted
-#define LIMIT_ANGLE = 60; // angle at which the servo should be limited
+float MOUNT_DISTANCE = 40.0; // distance to the wall at which the laser is mounted
+#define LIMIT_ANGLE 60 // angle at which the servo should be limited
+#define BUTTON_PIN 8  // button that triggers the distance update interrupt
+#define POTENTIOMETER_PIN 14 // pin to whiche the distance potentiometer is connected
 
 /// ------- TASKS -------- //
 #include <TaskScheduler.h>
@@ -30,10 +32,19 @@ Task tUpdateLaser(TASK_MILLISECOND * 200,
                   &ts,
                   true);
 
+// -- check for distance updates
+void updateMountDistance();
+Task tUpdateMountDistance(TASK_SECOND,
+                  TASK_FOREVER,
+                  &updateMountDistance,
+                  &ts,
+                  true);
 
 void setup() {
   // put your setup code here, to run once:
+  //Serial.begin(115200);
   pointer.attach(9);
+  pinMode(BUTTON_PIN, INPUT);
 }
 
 void loop() {
@@ -41,7 +52,7 @@ void loop() {
 }
 
 
-
+// -- task functions
 void readMeasure() {
   distance = hc.dist();
 }
@@ -52,3 +63,10 @@ void moveLaser() {
     pointer.write(deg);
   }
 }
+
+void updateMountDistance() {
+  if (digitalRead(BUTTON_PIN) == HIGH) {
+    MOUNT_DISTANCE = map(analogRead(POTENTIOMETER_PIN), 0,1023, 30, 101);
+  }
+}
+

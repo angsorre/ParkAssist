@@ -27,5 +27,6 @@ Salvato nel file [wiring](wiring.txt), importabile in [circuitjs](https://www.fa
 
 
 ### Installazione
-Il laser va montato sul lato destro all'altezza del riferimento preso in considerazione. La distanza a cui si consiglia di montarlo è tra i 30-100cm, in maniera tale da ridurre la lunghezza della linea proiettata e da migliorare la precisione. Tale valore di distanza deve essere inserite nel parametro `mount_distance` prima di flashare il codice.
+Il laser va montato sul lato destro, all'altezza del riferimento preso in considerazione.
+La distanza di montaggio del laser dal punto di riferimento è il parametro principale del sistema ed ha valore default di `40cm`. Può essere tuttavia configurato a run-time (nel range `30-100cm`) a seconda dell'esigenze: è sufficiente regolare il potenziometro e tener premuto il pulsante per circa 1s.
 
