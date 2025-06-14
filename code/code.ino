@@ -66,7 +66,7 @@ void setup() {
   // EEPROM is read in bytes, however using an int is safe as value don't go over 255
   float temp;
   EEPROM.get(addr_MOUNT_DISTANCE, temp);  // allows non-bytes value writing
-  if (temp < 30.0) {
+  if (!(temp < 30.0 || temp > 100.0)) {
     MOUNT_DISTANCE = temp;
   }
 }
