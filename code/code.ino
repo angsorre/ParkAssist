@@ -1,16 +1,13 @@
 // every distance measure is in cm;
 #include <math.h>
-#include <EEPROM.h>
 
 
 float MOUNT_DISTANCE = 40.0;  // distance to the wall (cm) at which the laser is mounted
-float addr_MOUNT_DISTANCE = 4;
 #define LIMIT_ANGLE 60                 // angle at which the servo should be limited
 #define UPDATE_DISTANCE_BUTTON_PIN 8   // button that triggers the distance update
 #define UPDATE_ZERO_DEG_BUTTON_PIN 12  // button that triggers the zero_deg update
 #define POTENTIOMETER_PIN 14         // pin to which the distance potentiometer is connected
 int ZERO_DEG = 0;
-int addr_ZERO_DEG = 0;
 
 /// ------- TASKS -------- //
 #include <TaskScheduler.h>
@@ -62,13 +59,8 @@ void setup() {
   //Serial.begin(115200);
   pointer.attach(9);
   pinMode(UPDATE_DISTANCE_BUTTON_PIN, INPUT);
-  ZERO_DEG = EEPROM.read(addr_ZERO_DEG);
-  // EEPROM is read in bytes, however using an int is safe as value don't go over 255
-  float temp;
-  EEPROM.get(addr_MOUNT_DISTANCE, temp);  // allows non-bytes value writing
-  if (!(temp < 30.0 || temp > 100.0)) {
-    MOUNT_DISTANCE = temp;
-  }
+  pinMode(UPDATE_ZERO_DEG_BUTTON_PIN, INPUT);
+  pinMode(POTENTIOMETER_PIN, INPUT);
 }
 
 void loop() {
@@ -90,8 +82,11 @@ void moveLaser() {
 
 void updateMountDistance() {
   if (digitalRead(UPDATE_DISTANCE_BUTTON_PIN) == HIGH) {
+    float d_min_old = tan(ZERO_DEG * M_PI/180) * MOUNT_DISTANCE;
+
     MOUNT_DISTANCE = map(analogRead(POTENTIOMETER_PIN), 0, 1023, 30, 101);
-    EEPROM.put(addr_MOUNT_DISTANCE, MOUNT_DISTANCE);
+
+    ZERO_DEG = atan(d_min_old / MOUNT_DISTANCE) * 180 / M_PI;
   }
 }
 
@@ -100,11 +95,6 @@ void updateZeroDeg() {
     int deg = atan(distance / MOUNT_DISTANCE) * 180 / M_PI;
     if (deg < LIMIT_ANGLE) {
       ZERO_DEG = deg;
-      EEPROM.update(addr_ZERO_DEG, deg);
     }
-    /*
-    EEPROM writes are limited to 100k cycles, write() method should be as valuable as the value isn't supposed to change so often
-    but update can save write cycles if it doesn't change.
-  */
   }
 }
